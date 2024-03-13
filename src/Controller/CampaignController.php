@@ -31,7 +31,7 @@ class CampaignController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) { 
-            dd($campaign);
+           
             $entityManager->persist($campaign);
             $entityManager->flush();
 
