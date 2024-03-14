@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Campaign;
 use App\Form\CampaignType;
 use App\Repository\CampaignRepository;
+use App\Repository\ParticipantRepository;
+use App\Repository\PaymentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,7 +33,7 @@ class CampaignController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) { 
-           
+           $campaign->setId();
             $entityManager->persist($campaign);
             $entityManager->flush();
 
@@ -45,10 +47,20 @@ class CampaignController extends AbstractController
     }
 
     #[Route('/{id}/show', name: 'app_campaign_show', methods: ['GET'])]
-    public function show(Campaign $campaign): Response
+    // L'id ici envoye dans la route est utilise pour instancier l'objet Campaign qui correspond a l'id de la route dans la base de données. 
+    public function show(Campaign $campaign, PaymentRepository $paymentRepository, ParticipantRepository $participantRepository): Response //l'objet campagne est recuperer ici
     {
+        $allParticipantsFromCampaign = $participantRepository->findBy(['campaign' => $campaign]);
+        $allPaymentsFromCampaign = $paymentRepository->findBy();
+        
+
+
+        dd($campaign, $allParticipantsFromCampaign);
+ 
         return $this->render('campaign/show.html.twig', [
             'campaign' => $campaign,
+            'participants' => $allParticipants
+            //La fonction show nous renvoie unu campaign 
         ]);
     }
 

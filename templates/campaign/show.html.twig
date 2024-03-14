@@ -1,46 +1,179 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Campaign{% endblock %}
+{% block title %}Campaign
+{% endblock %}
 
 {% block body %}
-    <h1>Campaign</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ campaign.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ campaign.title }}</td>
-            </tr>
-            <tr>
-                <th>Content</th>
-                <td>{{ campaign.content }}</td>
-            </tr>
-            <tr>
-                <th>Goal</th>
-                <td>{{ campaign.goal }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ campaign.name }}</td>
-            </tr>
-            <tr>
-                <th>Created_at</th>
-                <td>{{ campaign.createdAt ? campaign.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Updated_at</th>
-                <td>{{ campaign.updatedAt ? campaign.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+	<div class="parallax-container valign-wrapper">
+		<div class="section no-pad-bot">
+			<div class="container">
+				<h1 class="header center white-text light">{{ campaign.title }}</h1>
+				<div class="row center">
+					<h5 class="header col s12 light"> Organisée par : {{ campaign.name }}</h5>
+				</div>
+			</div>
+		</div>
+		<div class="parallax"><img src="{{asset('assets/images/8.jpg')}}" alt="Titre de la campagne"></div>
+	</div>
 
-    <a href="{{ path('app_campaign_index') }}">back to list</a>
+	<section class="progress-section">
+		<div class="progress">
+			<div class="determinate" style="width: 70%">
+				<span>70% de l'objectif</span>
+			</div>
+		</div>
+	</section>
 
-    <a href="{{ path('app_campaign_edit', {'id': campaign.id}) }}">edit</a>
+	<div class="container participe">
+		<div
+			class="section">
+			<!-- Participation section -->
+			<div class="row">
+				<div class="card col s12 m12 l8 offset-l2">
+					<div class="card-content">
+						<div class="input-field col s12 l6">
+							<input id="mount" type="number" class="validate">
+							<label for="mount">Votre participation</label>
+						</div>
+						<a href="{{path('app_payment_new', {'id': campaign.id})}}" class="btn-large waves-effect waves-light pink lighten-1 col s12 l6">Participer</a>
+						<div class="clearfix"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col s12 center">
+					<h4>A propos de la campagne</h4>
+				</div>
+			</div>
+			<!--   Icon Section   -->
+			<div class="row">
+				<div class="col s12 m6 l3 offset-l3">
+					<div class="icon-block center">
+						<div class="btn-large btn-floating white">
+							<i class="material-icons teal-text">person</i>
+						</div>
+						<h3 class="center">12</h3>
+						<p class="light">Participants</p>
+					</div>
+				</div>
 
-    {{ include('campaign/_delete_form.html.twig') }}
+				<div class="col s12 m6 l3">
+					<div class="icon-block center">
+						<div class="btn-large btn-floating white">
+							<i class="material-icons teal-text">redeem</i>
+						</div>
+						<h3 class="center">220</h3>
+						<p class="light">euros récoltés</p>
+					</div>
+				</div>
+			</div>
+			<!-- Form section -->
+			<div class="row">
+				<form>
+					<div class="input-field col s12">
+						<label for="description">Description</label>
+						<textarea id="description" class="materialize-textarea" readonly="readonly">{{ campaign.content }}</textarea>
+					</div>
+					<div class="input-field col s12 l6">
+						<input id="goal" type="number" readonly="readonly" value="{{ campaign.goal }}">
+						<label for="goal">Objectif</label>
+					</div>
+					<div class="col s12 l6 offset-l3">
+						<button class="btn btn-large waves-effect waves-light col s12" type="submit" name="action">
+							Modifiez la campagne
+							<i class="material-icons right">edit</i>
+						</button>
+					</div>
+				</form>
+			</div>
+			<!-- List -->
+			<div class="row">
+				<div class="col s12 center">
+					<h4>Liste des participants</h4>
+				</div>
+				<div class="col s12">
+					<table class="highlight responsive-table">
+				
+						<thead>
+							<tr>
+								<th>Email</th>
+								<th>Participation</th>
+							</tr>
+						</thead>
+
+						<tbody>
+						{% for payment in payments %}
+							<tr>
+								<td>{{ payment.participant.email }}</td>
+								<td>{{ payment.amount }}€</td>
+							</tr>
+							{% endfor %}
+							<tr>
+								<td>Alan@live.net</td>
+								<td>12€</td>
+							</tr>
+							<tr>
+								<td>Jonathan@live.net</td>
+								<td>7€</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="parallax-container valign-wrapper">
+		<div class="section no-pad-bot">
+			<div class="container">
+				<div class="row center">
+					<h4 class="header col s12 light">Une campagne pensée pour vous<br>et pour toutes les occasions</h4>
+				</div>
+			</div>
+		</div>
+		<div class="parallax"><img src="{{asset('assets/images/10.jpg')}}" alt="Une campagne pensée pour vous"></div>
+	</div>
+
+
+	<h1>Campaign</h1>
+
+	<table class="table">
+		<tbody>
+			<tr>
+				<th>Id</th>
+				<td>{{ campaign.id }}</td>
+			</tr>
+			<tr>
+				<th>Title</th>
+				<td>{{ campaign.title }}</td>
+			</tr>
+			<tr>
+				<th>Content</th>
+				<td>{{ campaign.content }}</td>
+			</tr>
+			<tr>
+				<th>Goal</th>
+				<td>{{ campaign.goal }}</td>
+			</tr>
+			<tr>
+				<th>Name</th>
+				<td>{{ campaign.name }}</td>
+			</tr>
+			<tr>
+				<th>Created_at</th>
+				<td>{{ campaign.createdAt ? campaign.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+			</tr>
+			<tr>
+				<th>Updated_at</th>
+				<td>{{ campaign.updatedAt ? campaign.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<a href="{{ path('app_campaign_index') }}">back to list</a>
+
+	<a href="{{ path('app_campaign_edit', {'id': campaign.id}) }}">edit</a>
+
+	{{ include('campaign/_delete_form.html.twig') }}
 {% endblock %}

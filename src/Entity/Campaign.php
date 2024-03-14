@@ -32,16 +32,14 @@ class Campaign
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updated_at = null;
 
-  
 
 
-
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
     }
 
-    public function setId(string $id): self
+    public function setId(): self
 {
     $id = md5(random_bytes(50));
     $this->id = $id;

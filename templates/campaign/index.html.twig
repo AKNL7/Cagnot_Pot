@@ -26,7 +26,7 @@
 								<input id="cag_name" type="text" class="validate">
 								<label for="cag_name">Nommez votre nouvelle campagne</label>
 							</div>
-							<a href="create" class="btn-large waves-effect waves-light pink lighten-1 col s12 l4">Valider</a>
+							<a href="new" class="btn-large waves-effect waves-light pink lighten-1 col s12 l4">Valider</a>
 						</div>
 					</div>
 				</div>
@@ -96,18 +96,21 @@
 
 			<div class="row">
 				<div class="col s12 center">
-					<h4>les campagnes du moment</h4>
+					<h4>Les campagnes du moment</h4>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col s12">
 					<div class="carousel">
-                    {% for campaign in campaigns %}
-						<a class="carousel-item" href="#one!">
+
+					{% for campaign in campaigns %}
+                    
+						<a class="carousel-item" href="{{ path('app_campaign_show', {'id': campaign.id}) }}"> 
+						
 							<div class="card center">
 								<div class="card-content">
-									<span class="card-title teal-text">Titre campagne</span>
-									<p class="black-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+									<span class="card-title teal-text">{{ campaign.title }}</span>
+									<p class="black-text">{{ campaign.content }}</p>
 								</div>
 								<div class="card-action">
 									<div class="row black-text">
@@ -117,7 +120,7 @@
 										</div>
 										<div class="col s6">
 											<i class="material-icons teal-text">euro_symbol</i>
-											<b>350</b>
+											<b>{{ campaign.goal }}</b>
 										</div>
 									</div>
 
@@ -127,7 +130,12 @@
 								</div>
 							</div>
 						</a>
-						{% endfor %}
+							{% else %}
+				<tr>
+					<td colspan="8">no records found</td>
+				</tr>
+			{% endfor %}
+						
 					</div>
 				</div>
 			</div>
@@ -154,7 +162,7 @@
 		<tbody>
 			{% for campaign in campaigns %}
 				<tr>
-					<td>{{ campaign.id }}</td>
+					 <td>{{ campaign.id }}</td> 
 					<td>{{ campaign.title }}</td>
 					<td>{{ campaign.content }}</td>
 					<td>{{ campaign.goal }}</td>
@@ -162,8 +170,8 @@
 					<td>{{ campaign.createdAt ? campaign.createdAt|date('Y-m-d H:i:s') : '' }}</td>
 					<td>{{ campaign.updatedAt ? campaign.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
 					<td>
-						<a href="{{ path('app_campaign_show', {'id': campaign.id}) }}">show</a>
-						<a href="{{ path('app_campaign_edit', {'id': campaign.id}) }}">edit</a>
+					 <a href="{{ path('app_campaign_show', {'id': campaign.id}) }}">show</a> 
+						 <a href="{{ path('app_campaign_edit', {'id': campaign.id}) }}">edit</a> 
 					</td>
 				</tr>
 			{% else %}
