@@ -26,6 +26,9 @@ class Payment
     #[ORM\JoinColumn(nullable: false)]
     private ?Participant $participant = null;
 
+    #[ORM\ManyToOne(inversedBy: 'payments')]
+    private ?Campaign $campaign = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -75,6 +78,18 @@ class Payment
     public function setParticipant(Participant $participant): static
     {
         $this->participant = $participant;
+
+        return $this;
+    }
+
+    public function getCampaign(): ?Campaign
+    {
+        return $this->campaign;
+    }
+
+    public function setCampaign(?Campaign $campaign): static
+    {
+        $this->campaign = $campaign;
 
         return $this;
     }

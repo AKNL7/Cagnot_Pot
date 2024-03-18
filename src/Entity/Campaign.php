@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CampaignRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -31,6 +33,22 @@ class Campaign
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updated_at = null;
+
+    #[ORM\OneToMany(targetEntity: Payment::class, mappedBy: 'campaign')]
+    private Collection $payments;
+
+    #[ORM\OneToMany(targetEntity: Participant::class, mappedBy: 'campaign')]
+    private Collection $participants;
+
+    
+
+   
+
+    public function __construct()
+    {
+        $this->payments = new ArrayCollection();
+        $this->participants = new ArrayCollection();
+    }
 
 
 
@@ -114,6 +132,66 @@ class Campaign
     public function setUpdatedAt(?\DateTimeImmutable $updated_at): static
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Payment>
+     */
+    public function getPayments(): Collection
+    {
+        return $this->payments;
+    }
+
+    public function addPayment(Payment $payment): static
+    {
+        if (!$this->payments->contains($payment)) {
+            $this->payments->add($payment);
+            $payment->setCampaign($this);
+        }
+
+        return $this;
+    }
+
+    public function removePayment(Payment $payment): static
+    {
+        if ($this->payments->removeElement($payment)) {
+            // set the owning side to null (unless already changed)
+            if ($payment->getCampaign() === $this) {
+                $payment->setCampaign(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Participant>
+     */
+    public function getParticipants(): Collection
+    {
+        return $this->participants;
+    }
+
+    public function addParticipant(Participant $participant): static
+    {
+        if (!$this->participants->contains($participant)) {
+            $this->participants->add($participant);
+            $participant->setCampaign($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParticipant(Participant $participant): static
+    {
+        if ($this->participants->removeElement($participant)) {
+            // set the owning side to null (unless already changed)
+            if ($participant->getCampaign() === $this) {
+                $participant->setCampaign(null);
+            }
+        }
 
         return $this;
     }

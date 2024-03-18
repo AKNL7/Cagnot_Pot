@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Campaign;
+use App\Entity\Participant;
 use App\Form\CampaignType;
 use App\Repository\CampaignRepository;
 use App\Repository\ParticipantRepository;
@@ -17,10 +18,12 @@ use Symfony\Component\Routing\Attribute\Route;
 class CampaignController extends AbstractController
 {
     #[Route('/', name: 'app_campaign_index', methods: ['GET'])]
-    public function index(CampaignRepository $campaignRepository): Response
+    public function index(CampaignRepository $campaignRepository, PaymentRepository $paymentRepository, ParticipantRepository $participantRepository): Response
     {
+        $campaigns = $campaignRepository->findAll();
+        
         return $this->render('campaign/index.html.twig', [
-            'campaigns' => $campaignRepository->findAll(),
+            'campaigns' => $campaigns,
         ]);
     }
 
@@ -43,6 +46,7 @@ class CampaignController extends AbstractController
         return $this->render('campaign/new.html.twig', [
             'campaign' => $campaign,
             'form' => $form,
+          
         ]);
     }
 
@@ -53,8 +57,8 @@ class CampaignController extends AbstractController
     public function show(Campaign $campaign, PaymentRepository $paymentRepository, ParticipantRepository $participantRepository): Response //l'objet campagne est recuperer ici
     {
         $allParticipantsFromCampaign = $participantRepository->findBy(['campaign' => $campaign]);
-        // dd($allParticipantsFromCampaign);
-        $allPaymentsFromCampaign = $paymentRepository->findBy([]);
+        
+        $allPaymentsFromCampaign = $paymentRepository->findBy(['campaign' => $campaign]);
 
         // va donner la somme des payment des participants 
         $countParticipants = count($allParticipantsFromCampaign);

@@ -19,9 +19,9 @@ class Participant
     #[ORM\Column(length: 200, nullable: true)]
     private ?string $email = null;
 
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(inversedBy: 'participants')]
     private ?Campaign $campaign = null;
+
 
     public function getId(): ?int
     {
@@ -52,7 +52,6 @@ class Participant
         return $this;
     }
 
-    // du a la relation ce set et get manipule l'entité Campaign entiére 
     public function getCampaign(): ?Campaign
     {
         return $this->campaign;
@@ -64,4 +63,5 @@ class Participant
 
         return $this;
     }
+
 }

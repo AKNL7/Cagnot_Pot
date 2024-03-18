@@ -39,32 +39,24 @@
 						{{ form_start(form) }}
 						<div
 							class="input-field col s12 l6">
-							{# <input id="name" type="text" class="validate">
-														<label for="name">Votre Nom</label> #}
 							{{ form_row(form.name)}}
 						</div>
-						<div
-							class="input-field col s12 l6">
-							{# <input id="email" type="email" class="validate">
-														<label for="email">Votre Email</label> #}
+						<div class="input-field col s12 l6">
+                         
+						</div>
+						<div class="input-field col s12 l8">
+						
+							{{ form_row(form.title) }}
+				
+
+						</div>
+						<div class="input-field col s12">
+						{{form_row(form.content)}}
 							
 						</div>
 						<div
-							class="input-field col s12 l8">
-							{# <input id="title" type="text" class="validate"> #}
-							{{ form_widget(form.title) }}
-							{# <label for="title">Titre de votre campagne</label>  #}
-
-						</div>
-						<div
-							class="input-field col s12">
-							{# <textarea id="content" class="materialize-textarea" placeholder="Décrivez à vos amis pourquoi vous faites une campagne"></textarea> #}
-							{{form_row(form.content)}}
-						</div>
-						<div
 							class="input-field col s12 l6">
-							{# <input id="goal" type="number" class="validate">
-														<label for="goal">Votre objectif en euros</label> #}
+							
 							{{form_row(form.goal)}}
 						</div>
 
@@ -119,6 +111,6 @@
 
 				</div>
 			</div>
-			{# 
-						    <a href="{{ path('app_campaign_index') }}">back to list</a> #}
+{# 			
+									    <a href="{{ path('app_campaign_index') }}">back to list</a> #}
 		{% endblock %}
