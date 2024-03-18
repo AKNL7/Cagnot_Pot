@@ -19,8 +19,8 @@
 
 	<section class="progress-section">
 		<div class="progress">
-			<div class="determinate" style="width: 70%">
-				<span>70% de l'objectif</span>
+			<div class="determinate" style="width: {{ progressBar }}">
+				<span>{{ progressBar }}% de l'objectif</span>
 			</div>
 		</div>
 	</section>
@@ -53,7 +53,7 @@
 						<div class="btn-large btn-floating white">
 							<i class="material-icons teal-text">person</i>
 						</div>
-						<h3 class="center">12</h3>
+						<h3 class="center">{{ countParticipants }}</h3>
 						<p class="light">Participants</p>
 					</div>
 				</div>
@@ -63,7 +63,7 @@
 						<div class="btn-large btn-floating white">
 							<i class="material-icons teal-text">redeem</i>
 						</div>
-						<h3 class="center">220</h3>
+						<h3 class="center"> {{ totalCountAmount }}</h3>
 						<p class="light">euros récoltés</p>
 					</div>
 				</div>
@@ -106,17 +106,19 @@
 						{% for payment in payments %}
 							<tr>
 								<td>{{ payment.participant.email }}</td>
+								<td>{{ payment.participant.name}}</td>
 								<td>{{ payment.amount }}€</td>
 							</tr>
 							{% endfor %}
-							<tr>
+							{# <tr>
+			
 								<td>Alan@live.net</td>
 								<td>12€</td>
 							</tr>
 							<tr>
 								<td>Jonathan@live.net</td>
 								<td>7€</td>
-							</tr>
+							</tr> #}
 						</tbody>
 					</table>
 				</div>
@@ -135,7 +137,7 @@
 		<div class="parallax"><img src="{{asset('assets/images/10.jpg')}}" alt="Une campagne pensée pour vous"></div>
 	</div>
 
-
+{# 
 	<h1>Campaign</h1>
 
 	<table class="table">
@@ -175,5 +177,5 @@
 
 	<a href="{{ path('app_campaign_edit', {'id': campaign.id}) }}">edit</a>
 
-	{{ include('campaign/_delete_form.html.twig') }}
+	{{ include('campaign/_delete_form.html.twig') }} #}
 {% endblock %}
