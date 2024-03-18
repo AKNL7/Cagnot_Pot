@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class CampaignController extends AbstractController
 {
-    #[Route('/index', name: 'app_campaign_index', methods: ['GET'])]
+    #[Route('/', name: 'app_campaign_index', methods: ['GET'])]
     public function index(CampaignRepository $campaignRepository): Response
     {
         return $this->render('campaign/index.html.twig', [
